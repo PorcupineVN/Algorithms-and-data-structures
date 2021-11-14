@@ -1,14 +1,30 @@
-#4. Найти сумму n элементов следующего ряда чисел: 1, -0.5, 0.25, -0.125,…
-# Количество элементов (n) вводится с клавиатуры.
+# 4. Определить, какое число в массиве встречается чаще всего.
 
-print('Введите количество элементов ряда')
-n = int(input())
-summ = 0
-numb = 1
-for _ in range(n):
-    summ += numb
-    numb *= -0.5
-print(f'Сумма элементов ряда: {summ}')
+# В процессе тестов, неоднократно возникали ситуации нескольких самых популярных чисел. Так что решение реализовано
+# для случая не очень идеального пользователя.
+import random
 
-# Т.к. в условии задачи не сказано, что необходимо складывать числа по модулю, то реализовал решение
-# в котором числа складываются с учётом знака.
+SIZE = 13
+MIN_NUMB = 0
+MAX_NUMB = 10
+random_numbers = [random.randint(MIN_NUMB, MAX_NUMB + 1) for _ in range(SIZE)]
+print(random_numbers)  # Традиционный вывод для удобства проверки.
+
+dict_numbers = {}
+for numb in random_numbers:
+    if numb in dict_numbers.keys():
+        dict_numbers[numb] += 1
+    else:
+        dict_numbers[numb] = 1
+most_popular = 0
+for value in dict_numbers.values():
+    if value > most_popular:
+        most_popular = value
+popular_numbers = []
+for key, value in dict_numbers.items():
+    if value == most_popular:
+        popular_numbers.append(key)
+print(f'Чаще всего ({most_popular} раз(а)) встречаются числа: ', end='')
+print(*popular_numbers, sep=', ', end='.')
+
+# P.S. Не отсортировал т.к. на лекции было озвучено требование не использовать встроенные методы.
